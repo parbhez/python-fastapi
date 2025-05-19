@@ -1,0 +1,5 @@
+cmd ke run as administration theke run korte hobe. tarpor project location jaite  hobe
+C:\Windows\System32>cd C:\Users
+C:\Users>cd DELL\Desktop\fastapi
+
+C:\Users\DELL\Desktop\fastapi>

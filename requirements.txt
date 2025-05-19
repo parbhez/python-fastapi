@@ -1,0 +1,5 @@
+# fastapi==0.104.1 # package name == package version
+
+fastapi
+
+uvicorn
