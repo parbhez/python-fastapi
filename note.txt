@@ -1,5 +1,7 @@
 cmd ke run as administration theke run korte hobe. tarpor project location jaite  hobe
-C:\Windows\System32>cd C:\Users
-C:\Users>cd DELL\Desktop\fastapi
+C:\Windows\System32>cd "C:\Users\DELL\Desktop\fastapi"
 
-C:\Users\DELL\Desktop\fastapi>
+then: 
+C:\Users\DELL\Desktop\fastapi>setup_fastapi_service.bat
+
+eta dile services.msc te ei FastAPI Herd Service ta add hobe and etar status running hobe

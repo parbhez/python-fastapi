@@ -1,5 +1,5 @@
-#https://www.youtube.com/watch?v=oKciAtJTuSw&list=LL&index=1&t=600s
-
+@REM https://www.youtube.com/watch?v=oKciAtJTuSw&list=LL&index=1&t=600s
+@REM https://nagasudhir.blogspot.com/2022/09/run-python-flask-server-as-windows.html
 call nssm.exe install my_fastapi_app "%cd%\run_server.bat"
 call nssm.exe set my_fastapi_app AppStdout "%cd%\logs\my_fastapi_app_logs.log"
 call nssm.exe set my_fastapi_app AppStderr "%cd%\logs\my_fastapi_app_logs.log"
