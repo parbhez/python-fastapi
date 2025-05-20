@@ -1,9 +1,9 @@
-from fastapi import FastAPI, status
-from typing import Optional
+from fastapi import FastAPI, status, Form, HTTPException, File, UploadFile
+from fastapi.responses import HTMLResponse
+from typing import Optional, Annotated
 from fastapi.responses import JSONResponse
-
 from enum import Enum
-
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -56,7 +56,7 @@ async def read_item(item_id: int):
         "Item ID": item_id
     } 
 
-@app.get("/products")
+@app.get("/product")
 async def product():
     return JSONResponse(status_code=status.HTTP_200_OK, content={
         "user": True
@@ -108,3 +108,77 @@ async def read_user_item(user_id: int, item_id: int, q: str | None = None, short
         })
     
     return item
+
+class Product(BaseModel):
+    title: str
+    description: str | None = None
+    price: float
+    tax: float | None = None
+    published_at: Optional[bool] = False
+
+# Request Body
+@app.post("/products")
+async def create_product(request:Product):
+    return {"data" : {
+        "title" : request.title,
+        "description" : request.description,
+        "price" : request.price,
+        "tax" : request.tax,
+        'published_at' : request.published_at
+    }}
+
+
+# Pydantic Models for Forms
+class FormData(BaseModel):
+    username: str
+    password: str
+    model_config = {"extra": "forbid"} #allow, ignore, forbid
+
+
+@app.post("/login")
+async def login(data: Annotated[FormData, Form()]):
+    return data
+
+
+
+# Use HTTPException
+students = {"foo": "The Foo Wrestlers"}
+@app.get("/students/{student_id}")
+async def read_item(student_id: str):
+    if student_id not in students:
+        raise HTTPException(status_code=404, detail="Student not found")
+    return {"item": students[student_id]}
+
+# Import File
+@app.post("/file/")
+async def create_file(file: Annotated[bytes, File()]):
+    return {"file_size": len(file)}
+
+@app.post("/uploadfile")
+async def upload_file(mp: UploadFile):
+    return { "file name" : mp.file}
+
+@app.post("/files/")
+async def create_files(files: Annotated[list[bytes], File()]):
+    return {"file_sizes": [len(file) for file in files]}
+
+@app.post("/uploadfiles/")
+async def create_upload_files(files: list[UploadFile]):
+    return {"filenames": [file.filename for file in files]}
+
+@app.get("/showfile")
+async def main():
+    content = """
+        <body>
+        <form action="/files/" enctype="multipart/form-data" method="post">
+        <input name="files" type="file" multiple>
+        <input type="submit">
+        </form>
+        <form action="/uploadfiles/" enctype="multipart/form-data" method="post">
+        <input name="files" type="file" multiple>
+        <input type="submit">
+        </form>
+        </body>
+            """
+
+    return HTMLResponse(content=content)

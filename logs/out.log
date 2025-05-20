@@ -69,3 +69,5 @@ INFO:     127.0.0.1:52414 - "GET /user/ADMIN HTTP/1.1" 200 OK
 INFO:     192.168.31.26:60572 - "GET / HTTP/1.1" 200 OK
 INFO:     192.168.31.26:60572 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:52448 - "GET /user/ADMIN HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53011 - "GET /blogs/50/comments HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53018 - "GET //blogs/10/comments HTTP/1.1" 404 Not Found
